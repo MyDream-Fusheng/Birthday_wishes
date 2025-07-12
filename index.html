@@ -1,0 +1,2186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日祝福 - 小美</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'ZCOOL XiaoWei', 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #ffe6f0, #ffd1dc, #ffc2d1);
+            color: #6b2e70;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 极光3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm57-13c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm-9-29c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4z' fill='%23f0a0c0' fill-opacity='0.12' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 20, 147, 0.15);
+            animation: float 15s infinite linear;
+        }
+        
+        #fireworks-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        /* 欢迎部分 */
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.65);
+            border-radius: 25px;
+            margin-top: 20px;
+            padding: 40px 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(219, 112, 147, 0.2);
+            border: 3px solid rgba(255, 182, 193, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .welcome-section::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ffc1c1, #ffb6c1, #ff69b4, #ff1493);
+            z-index: -1;
+            border-radius: 30px;
+            opacity: 0.2;
+            filter: blur(20px);
+        }
+        
+        .welcome-section h1 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            color: #c71585;
+            text-shadow: 0 0 10px rgba(255, 215, 230, 0.8);
+            animation: pulse 2s infinite;
+            letter-spacing: 3px;
+        }
+        
+        .birthday-person {
+            font-size: 2.5rem;
+            color: #db7093;
+            margin: 20px 0;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
+        }
+        
+        .birthday-date {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: #e75480;
+            background: linear-gradient(to right, #ffb6c1, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+        
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            animation: bounce 2s infinite;
+            font-size: 2rem;
+            color: rgba(199, 21, 133, 0.7);
+        }
+        
+        /* 照片回忆部分 */
+        .photos-section {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 25px;
+            padding: 25px;
+            margin: 20px 0;
+            backdrop-filter: blur(5px);
+            width: 95%;
+            box-shadow: 0 10px 30px rgba(219, 112, 147, 0.2);
+            border: 2px solid rgba(255, 182, 193, 0.4);
+        }
+        
+        .section-title {
+            font-family: 'Ma Shan Zheng', 'Noto Sans SC', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #c71585;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(to right, #ffb6c1, #ff69b4, #db7093);
+            border-radius: 3px;
+        }
+        
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .memory-photo-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(219, 112, 147, 0.3);
+            height: 300px;
+            background: #fff;
+            transition: all 0.3s;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .memory-photo-container:hover {
+            transform: translateY(-8px) rotateZ(2deg);
+            box-shadow: 0 15px 25px rgba(219, 112, 147, 0.4);
+        }
+        
+        .memory-photo {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .memory-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s;
+        }
+        
+        .memory-photo-container:hover .memory-photo img {
+            transform: scale(1.05);
+        }
+        
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(199, 21, 133, 0.85);
+            padding: 12px;
+            font-size: 1.1rem;
+            text-align: center;
+            color: white;
+            font-weight: 500;
+            font-family: 'Noto Sans SC', 'ZCOOL XiaoWei', sans-serif;
+        }
+        
+        .photo-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .photo-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(219, 112, 147, 0.4);
+            color: #db7093;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
+        
+        .photo-btn:hover {
+            transform: scale(1.15);
+            background: white;
+            color: #c71585;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 照片上传区域 */
+        .photo-upload-area {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px dashed #db7093;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .photo-upload-area:hover {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: #c71585;
+        }
+        
+        .upload-btn {
+            padding: 14px 30px;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4, #fbc2eb);
+            color: #c71585;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(219, 112, 147, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .upload-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(219, 112, 147, 0.4);
+        }
+        
+        .upload-input {
+            display: none;
+        }
+        
+        /* 蛋糕部分 */
+        .cake-section {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 25极光px;
+            padding: 35px 25px;
+            margin: 20px 0;
+            backdrop-filter: blur(5px);
+            width: 95%;
+            box-shadow: 0 10px 30px rgba(219, 112, 147, 0.2);
+            border: 2px solid rgba(255, 182, 193, 0.4);
+        }
+        
+        .cake-container {
+            position: relative;
+            width: 100%;
+            height: 50vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .cake {
+            position: relative;
+            width: 240px;
+            height: 180px;
+            z-index: 2;
+            filter: drop-shadow(0 10px 20px rgba(199, 21, 133, 0.3));
+        }
+        
+        .cake-layer {
+            position: absolute;
+            width: 220px;
+            height: 55px;
+            background: linear-gradient(to bottom, #ffc1d6, #ff9ebb, #ff85ab);
+            border-radius: 50% 50% 0 0;
+            box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        .layer-1 {
+            bottom: 0;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .layer-2 {
+            bottom: 45px;
+            width: 190px;
+            height: 50px;
+            background: linear-gradient(to bottom, #ffb4d0, #ff8aad, #ff78a5);
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .layer-3 {
+            bottom: 85px;
+            width: 160px;
+            height: 45px;
+            background: linear-gradient(to bottom, #ffa8c8, #ff7ba5, #ff6394);
+            z-index: 3;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cake-top {
+            position: absolute;
+            bottom: 120px;
+            width: 140px;
+            height: 25px;
+            background: #ff94b5;
+            border-radius: 50%;
+            z-index: 4;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .candle {
+            position: absolute;
+            width: 8px;
+            height: 45px;
+            background: linear-gradient(to bottom, #ffccd9, #ffb0c5, #ff94b1);
+            border-radius: 4px;
+            bottom: 145px;
+            z-index: 5;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .candle:nth-child(1) { left: 50%; transform: translateX(-50%); }
+        .candle:nth-child(2) { left: 35%; transform: translateX(-50%); }
+        .candle:nth-child(3) { left: 65%; transform: translateX(-50%); }
+        
+        .flame {
+            position: absolute;
+            width: 15px;
+            height: 28px;
+            background: linear-gradient(to bottom, #ffecb3, #ffd54f);
+            border-radius: 50% 50% 20% 20%;
+            bottom: 190px;
+            animation: flicker 1.5s infinite alternate;
+            box-shadow: 0 0 20px #ff9f1a, 0 0 40px rgba(255, 159, 26, 0.5);
+            z-index: 6;
+        }
+        
+        .flame::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 5px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+        }
+        
+        .flame:nth-child(4) { left: 50%; transform: translateX(-50%); }
+        .flame:nth-child(5) { left: 35%; transform: translateX(-50%); }
+        .flame:nth-child(6) { left: 65%; transform: translateX(-50%); }
+        
+        .blow-btn {
+            margin-top: 35px;
+            padding: 16px 50px;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4, #fbc2eb);
+            border: none;
+            border-radius: 50px;
+            color: #c71585;
+            font-size: 1.4rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(219, 112, 147, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .blow-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(219, 112, 147, 0.5);
+        }
+        
+        .wish-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 320px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 40px rgba(199, 21, 133, 0.3);
+            z-index: 10;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid #ffb6c1;
+        }
+        
+        .wish-card.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        
+        .wish-card h3 {
+            color: #c71585;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-align: center;
+            font-family: 'Ma Shan Zheng', 'Noto Sans SC', sans-serif;
+        }
+        
+        .wish-card textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: 2px solid #ffb6c1;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            resize: none;
+            margin-bottom: 15px;
+            background: rgba(255, 240, 245, 0.5);
+            color: #6b2e70;
+        }
+        
+        .wish-card button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #ff6b8b, #ff8e9e);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(219, 112, 147, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .wish-card button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(219, 112, 147, 0.4);
+        }
+        
+        /* 愿望展示区 - 美化 */
+        .wishes-display {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(219, 112, 147, 0.3);
+            border: 2px solid #ffb6c1;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.5s ease;
+            background-image: linear-gradient(135deg, rgba(255,182,193,0.1) 0%, rgba(255,105,180,0.1) 100%);
+            border-left: 8px solid #ff69b4;
+        }
+        
+        .wishes-display.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .wishes-display h3 {
+            color: #c71585;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+            font-family: 'Ma Shan Zheng', 'Noto Sans SC', sans-serif;
+            border-bottom: 2px solid #ffb6c1;
+            padding-bottom: 10px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .wish-frame {
+            background: linear-gradient(135deg, #fff5f7, #ffeef2);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ffc1d6;
+            box-shadow: inset 0 0 10px rgba(255,182,193,0.2);
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .wish-frame::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 100 100"><rect fill="none" stroke="%23ffb6c1" stroke-width="2" x="0" y="0" width="100" height="100" rx="20" ry="20"/></svg>');
+            background-size: 20px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .wish-content {
+            background: transparent;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 15px;
+            font-size: 1.2rem;
+            color: #c71585;
+            font-style: italic;
+            font-family: 'Ma Shan Zheng', cursive;
+            line-height: 1.6;
+            z-index: 1;
+        }
+        
+        .toggle-wishes {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(to right, #ff6b8b, #ff8e9e);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(219, 112, 147, 0.4);
+            z-index: 101;
+            transition: all 0.3s;
+        }
+        
+        .toggle-wishes:hover {
+            transform: scale(1.1);
+        }
+        
+        /* 视频祝福部分 */
+        .video-section {
+            background: rgba(255, 255, 255, 0.65);
+            border-radius: 25px;
+            padding: 35px 25px;
+            margin: 20px 0 80px;
+            backdrop-filter: blur(10px);
+            width: 95%;
+            box-shadow: 0 10px 30px rgba(219, 112, 147, 0.2);
+            border: 2px solid rgba(255, 182, 193, 0.4);
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.1);
+            min-height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .video-placeholder i {
+            font-size: 5rem;
+            color: #db7093;
+            margin-bottom: 20px;
+        }
+        
+        .video-placeholder p {
+            font-size: 1.3rem;
+            color: #c71585;
+            margin-bottom: 25px;
+        }
+        
+        .video-upload-btn {
+            padding: 14px 35px;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4, #fbc2eb);
+            color: #c71585;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(219, 112, 147, 0.3);
+            transition: all 0.3s;
+            font-weight: 600;
+            display: block; /* 确保按钮可以设置宽度 */
+            width: max-content; /* 宽度自适应内容 */
+            margin: 20px auto 0; /* 上下外边距，水平居中 */
+        }
+        
+        .video-upload-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(219, 112, 147, 0.4);
+        }
+        
+        .video-player {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(199, 21, 133, 0.8);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .video-container:hover .video-controls {
+            opacity: 1;
+        }
+        
+        .video-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #c71585;
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .video-btn:hover {
+            transform: scale(1.1);
+            background: #ffecf0;
+        }
+        
+        /* 祝福部分 */
+        .wishes-section {
+            background: rgba(255, 255, 255, 0.65);
+            border-radius: 25px;
+            padding: 35px 25px;
+            margin: 20px 0 80px;
+            backdrop-filter: blur(10px);
+            width: 95%;
+            box-shadow: 0 10px 30px rgba(219, 112, 147, 0.2);
+            border: 2px solid rgba(255, 182, 193, 0.4);
+        }
+        
+        .wishes-container {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 50vh;
+            overflow-y: auto;
+            backdrop-filter: blur(3px);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+        }
+        
+        .wish {
+            padding: 18px;
+            margin: 20px 0;
+            background: linear-gradient(to right, rgba(255, 182, 193, 0.2), rgba(255, 105, 180, 0.1));
+            border-radius: 15px;
+            text-align: left;
+            font-size: 1.2rem;
+            animation: fadeIn 1s;
+            position: relative;
+            border-left: 5px solid #ff69b4;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .wish:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            background: linear-gradient(to right, rgba(255, 182, 193, 0.25), rgba(255, 105, 180, 0.15));
+        }
+        
+        .wish:before {
+            content: "❀";
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #ff69b4;
+            text-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
+        }
+        
+        .add-wish {
+            display: flex;
+            margin-top: 30px;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50px;
+            padding: 5px;
+            box-shadow: 0 5px 15px rgba(219, 112, 147, 0.2);
+            border: 1px solid rgba(255, 182, 193, 0.4);
+        }
+        
+        .add-wish input {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            background: transparent;
+            outline: none;
+            color: #6b2e70;
+            padding-left: 25px;
+        }
+        
+        .add-wish button {
+            padding: 16px 40px;
+            background: linear-gradient(to right, #ff6b8b, #ff8e9e);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(219, 112, 147, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .add-wish button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(219, 112, 147, 0.4);
+            background: linear-gradient(to right, #ff6b8b, #ff7b91);
+        }
+        
+        /* 提示信息样式 */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: #c71585;
+            padding: 12px 24px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(199, 21, 133, 0.3);
+            font-weight: 500;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+        
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #db7093;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        
+        /* 心形雨动画 */
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-20vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* 其他动画 */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1, 1); opacity: 0.9; }
+            50% { transform: translateX(-50%) scale(1.05, 0.95); opacity: 1; }
+            100% { transform: translateX(-50%) scale(1.1, 0.9); opacity: 0.9; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes smoke {
+            0% { transform: translateX(-50%) scale(0); opacity: 0; }
+            50% { transform: translateX(-50%) scale(1.2); opacity: 0.8; }
+            100% { transform: translateX(-50%) scale(1.5); opacity: 0; }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .welcome-section h1 {
+                font-size: 2.8rem;
+            }
+            
+            .birthday-person {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .cake {
+                transform: scale(0.9);
+            }
+            
+            .photos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+            
+            .video-container {
+                min-height: 300px;
+            }
+            
+            .wishes-display {
+                width: 90%;
+                left: 5%;
+                right: 5%;
+                top: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .welcome-section h1 {
+                font-size: 2.2rem;
+            }
+            
+            .birthday-person {
+                font-size: 1.9rem;
+            }
+            
+            .section-title {
+                font-size: 1.9rem;
+            }
+            
+            .cake {
+                transform: scale(0.8);
+            }
+            
+            .blow-btn {
+                padding: 14px 35px;
+                font-size: 1.2rem;
+            }
+            
+            .photos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .add-wish {
+                flex-direction: column;
+                border-radius: 25px;
+            }
+            
+            .add-wish input, .add-wish button {
+                width: 100%;
+                border-radius: 25px;
+            }
+        }
+
+        /* 视频列表容器 */
+        .video-list-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(219, 112, 147, 0.2);
+            border: 1px solid rgba(255, 182, 193, 0.4);
+        }
+        
+        .video-list-container h3 {
+            color: #c71585;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Ma Shan Zheng', cursive;
+            border-bottom: 2px solid #ffb6c1;
+            padding-bottom: 10px;
+        }
+        
+        .video-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .video-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #ffd1dc, #ffb6c1);
+        }
+        
+        .video-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(219, 112, 147, 0.3);
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .video-thumbnail i {
+            font-size: 2.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            z-index: 1;
+        }
+        
+        .video-thumbnail::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(199, 21, 133, 0.3), rgba(255, 105, 180, 0.5));
+        }
+        
+        .video-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(199, 21, 133, 0.85);
+            color: white;
+            padding: 8px;
+            font-size: 0.9rem;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .video-controls {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            display: flex;
+            gap: 5px;
+            z-index: 2;
+        }
+        
+        .video-control-btn {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #c71585;
+            font-size: 0.8rem;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
+        
+        .video-control-btn:hover {
+            transform: scale(1.1);
+            background: white;
+        }
+        
+        .upload-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #ff6b8b, #ff8e9e);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 提示信息 -->
+    <div class="toast" id="toast"></div>
+    
+    <!-- 心形背景 -->
+    <div class="hearts" id="hearts-container"></div>
+    
+    <!-- 烟花画布 -->
+    <canvas id="fireworks-canvas"></canvas>
+    
+    <!-- 愿望展示区 -->
+    <div class="wishes-display" id="wishes-display">
+        <h3>小美的愿望</h3>
+        <div class="wish-frame">
+            <div class="wish-content" id="wish-content">许下你的愿望...</div>
+        </div>
+        <p>点击右上角按钮查看/隐藏愿望</p>
+    </div>
+    
+    <div class="toggle-wishes" id="toggle-wishes">
+        <i class="fas fa-star"></i>
+    </div>
+    
+    <div class="container">
+        <!-- 欢迎部分 -->
+        <section>
+            <div class="welcome-section">
+                <h1>🎀 生日快乐! 💖</h1>
+                <div class="birthday-person">亲爱的 <span id="friend-name">小美</span></div>
+                <div class="birthday-date">2025年7月13日</div>
+                <p style="font-size: 1.3rem; max-width: 600px; line-height: 1.6; margin: 20px 0;">
+                    祝你的每一岁 都能奔走在对生活的热爱里！<br>
+                    自由快乐 坦荡随心❤️ 奔赴山海 无所畏惧！
+                </p>
+                <div style="margin: 30px 0; font-size: 6rem; text-shadow: 0 0 20px rgba(255, 20, 147, 0.3);">
+                    🌸 🎀 🎁
+                </div>
+                <p style="font-size: 1rem; color: #e75480; max-width: 600px; line-height: 1.6; margin-top: 30px;">
+                    一站有一站的风景 永远年轻 永远热泪盈框！
+                </p>
+            </div>
+            <div class="scroll-hint">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+        
+        <!-- 照片回忆部分 -->
+        <section>
+            <div class="photos-section">
+                <h2 class="section-title">超级无敌大大大美女</h2>
+                
+                <!-- 照片网格区域 -->
+                <div class="photos-grid" id="photos-grid">
+                    <!-- 照片会动态添加在这里 -->
+                </div>
+                
+                <!-- 本地照片上传区域 -->
+                <div class="photo-upload-area">
+                    <p style="font-size: 1.3rem; color: #c71585;">点击添加更多照片</p>
+                    <input type="file" id="photo-upload" class="upload-input" accept="image/*" multiple>
+                    <button class="upload-btn" onclick="document.getElementById('photo-upload').click()">
+                        <i class="fas fa-cloud-upload-alt"></i> 上传照片
+                    </button>
+                    <p id="upload-status" style="margin-top: 15px; font-size: 1rem; color: #db7093;"></p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 蛋糕互动部分 -->
+        <section>
+            <div class="cake-section">
+                <h2 class="section-title">吹灭蜡烛许个愿吧</h2>
+                <div class="cake-container">
+                    <div class="cake">
+                        <div class="cake-layer layer-1"></div>
+                        <div class="cake-layer layer-2"></div>
+                        <div class="cake-layer layer-3"></div>
+                        <div class="cake-top"></div>
+                        <div class="candle"></div>
+                        <div class="candle"></div>
+                        <div class="candle"></div>
+                        <div class="flame"></div>
+                        <div class="flame"></div>
+                        <div class="flame"></div>
+                    </div>
+                    
+                    <!-- 许愿卡片 -->
+                    <div class="wish-card" id="wish-card">
+                        <h3>许下你的愿望</h3>
+                        <textarea id="wish-text" placeholder="写下你的生日愿望..."></textarea>
+                        <button id="save-wish-btn">保存愿望</button>
+                    </div>
+                </div>
+                <button class="blow-btn" id="blow-button">吹灭蜡烛</button>
+            </div>
+        </section>
+        
+        <!-- 在视频祝福部分 -->
+        <section>
+            <div class="video-section">
+                <h2 class="section-title">视频祝福</h2>
+                <div class="video-container">
+                    <!-- 移动控制按钮到顶部 -->
+                    <div class="video-controls" style="top: 10px; bottom: auto;">
+                        <div class="video-btn back-btn"><i class="fas fa-arrow-left"></i></div>
+                        <div class="video-btn play-btn"><i class="fas fa-play"></i></div>
+                        <div class="video-btn pause-btn"><i class="fas fa-pause"></i></div>
+                        <div class="video-btn volume-up"><i class="fas fa-volume-up"></i></div>
+                        <div class="video-btn volume-down"><i class="fas fa-volume-down"></i></div>
+                    </div>
+                    
+                    <div class="video-placeholder" id="video-placeholder">
+                        <!-- 改为暗红色的大尺寸摄像机图标 -->
+                        <i class="fas fa-video" style="font-size: 4rem; color: #a83d68; margin-bottom: 20px;"></i>
+                        <!-- 提示语改为浅粉色 -->
+                        <p style="color: #ffecf0;">上传你的生日祝福视频</p>
+                        <!-- 修改上传按钮样式 -->
+                        <!-- 在按钮内部 - 确保文本居中 -->
+                        <button class="video-upload-btn" id="video-upload-btn">
+                            <i class="fas fa-upload" style="margin-right: 5px;"></i> 
+                            <span style="display: inline-block;">选择视频</span>
+                        </button>
+                    </div>
+                    <video class="video-player" id="video-player" controls></video>
+                </div>
+                <input type="file" id="video-upload" accept="video/*" multiple style="display: none;">
+                
+                <!-- 视频列表容器 -->
+                <div class="video-list-container" style="background: rgba(255, 255, 255, 0.3);">
+                    <h3>所有祝福视频</h3>
+                    <div class="video-list" id="video-list">
+                        <!-- 视频列表会动态添加在这里 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <style>
+            /* 添加视频容器背景色 */
+            .video-container {
+                background: #db7093; /* 深玫红色背景 */
+                border: 2px solid #ffb6c1; /* 浅粉色边框 */
+            }
+            
+            /* 调整控制按钮样式为圆形白色背景 */
+            .video-btn {
+                background: white !important; 
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            }
+            
+            /* 确保控制栏在上部 */
+            .video-controls {
+                top: 10px !important; 
+                bottom: auto !important;
+            }
+            
+            /* 修改整个页面背景色 */
+            body {
+                background: #fff0f5 !important; /* 淡粉色背景 */
+            }
+        </style>
+        
+        <!-- 祝福部分 -->
+        <section>
+            <div class="wishes-section">
+                <h2 class="section-title">生日祝福</h2>
+                <div class="wishes-container" id="wishes-container">
+                    <div class="wish">🎀 亲爱的小美，生日快乐！愿你的生活像这粉色世界一样甜美梦幻！</div>
+                    <div class="wish">🌸 每一岁都奔走在自己的热爱里，永远像花儿一样绽放！生日快乐！</div>
+                    <div class="wish">💝 愿你的世界充满甜蜜与美好，每一刻都值得珍藏！</div>
+                    <div class="wish">🎂 祝你生日快乐！所有愿望都实现，所有梦想都开花！</div>
+                </div>
+                <div class="add-wish">
+                    <input type="text" id="new-wish" placeholder="写下你的祝福...">
+                    <button id="add-wish-btn">添加祝福</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 引入Supabase客户端 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script>
+        // 初始化Supabase客户端 - 替换为您的项目URL和API密钥
+        const SUPABASE_URL = 'https://bkxsqbreirtiiyvghhoo.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJreHNxYnJlaXJ0aWl5dmdoaG9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIyNTcyNTksImV4cCI6MjA2NzgzMzI1OX0.96oxlDU9gRt62KunTnnJs4Kw2ZX4998mOAKsTT40E94';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // 创建心形雨背景
+        function createHeartRain() {
+            const heartsContainer = document.getElementById('hearts-container');
+            const heartCount = 25;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤';
+                
+                // 随机位置
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 2 + 1) + 'rem';
+                
+                // 随机动画延迟
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                
+                // 随机动画持续时间
+                heart.style.animationDuration = (Math.random() * 5 + 15) + 's';
+                
+                heartsContainer.appendChild(heart);
+            }
+        }
+        
+        // 烟花特效
+        const canvas = document.getElementById('fireworks-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        let fireworks = [];
+        let particles = [];
+        
+        class Firework {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height;
+                this.targetX = Math.random() * canvas.width;
+                this.targetY = Math.random() * canvas.height * 0.6;
+                this.speed = 2;
+                this.angle = Math.atan2(this.targetY - this.y, this.targetX - this.x);
+                this.velocity = {
+                    x: Math.cos(this.angle) * this.speed,
+                    y: Math.sin(this.angle) * this.speed
+                };
+                this.alpha = 1;
+                this.color = `hsla(${Math.random() * 360}, 100%, 60%, 0.8)`;
+            }
+            
+            update() {
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.alpha -= 0.006;
+                
+                if (this.alpha <= 0.1) {
+                    this.explode();
+                    fireworks.splice(fireworks.indexOf(this), 1);
+                }
+            }
+            
+            explode() {
+                const particleCount = 100;
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = new Particle(this.x, this.y, this.color);
+                    particles.push(particle);
+                }
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+        
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.velocity = {
+                    x: Math.random() * 6 - 3,
+                    y: Math.random() * 6 - 3
+                };
+                this.alpha = 1;
+                this.decay = Math.random() * 0.02 + 0.01;
+                this.size = Math.random() * 3 + 1;
+            }
+            
+            update() {
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.velocity.y += 0.05; // gravity
+                this.alpha -= this.decay;
+            }
+            
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+        
+        function animateFireworks() {
+            requestAnimationFrame(animateFireworks);
+            ctx.fillStyle = 'rgba(255, 240, 245, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 绘制烟花
+            fireworks.forEach((firework, index) => {
+                firework.update();
+                firework.draw();
+            });
+            
+            // 绘制粒子
+            particles.forEach((particle, index) => {
+                particle.update();
+                particle.draw();
+                
+                if (particle.alpha <= 0) {
+                    particles.splice(index, 1);
+                }
+            });
+            
+            // 随机创建新烟花
+            if (Math.random() < 0.03) {
+                fireworks.push(new Firework());
+            }
+        }
+        
+        // 处理触摸事件以创建烟花
+        canvas.addEventListener('click', (e) => {
+            createFireworkAt(e.clientX, e.clientY);
+        });
+        
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            createFireworkAt(touch.clientX, touch.clientY);
+        });
+        
+        function createFireworkAt(x, y) {
+            const firework = new Firework();
+            firework.x = x;
+            firework.y = canvas.height;
+            firework.targetX = x;
+            firework.targetY = y;
+            firework.angle = Math.atan2(firework.targetY - firework.y, firework.targetX - firework.x);
+            firework.velocity = {
+                x: Math.cos(firework.angle) * firework.speed,
+                y: Math.sin(firework.angle) * firework.speed
+            };
+            fireworks.push(firework);
+        }
+        
+        // 吹蜡烛功能
+        const blowButton = document.getElementById('blow-button');
+        const flames = document.querySelectorAll('.flame');
+        const wishCard = document.getElementById('wish-card');
+        const saveWishBtn = document.getElementById('save-wish-btn');
+        const wishText = document.getElementById('wish-text');
+        const wishContent = document.getElementById('wish-content');
+        let candlesBlown = false;
+        
+        blowButton.addEventListener('click', () => {
+            if (candlesBlown) return;
+            
+            // 播放吹气音效
+            const blowSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-whoosh-1126.mp3');
+            blowSound.play();
+            
+            // 吹灭蜡烛动画
+            flames.forEach(flame => {
+                flame.style.animation = 'none';
+                flame.style.opacity = '0';
+                flame.style.transform = 'translateX(-50%) scale(0)';
+                flame.style.transition = 'all 0.5s ease-out';
+            });
+            
+            // 添加烟雾效果
+            setTimeout(() => {
+                const smoke = document.createElement('div');
+                smoke.style.position = 'absolute';
+                smoke.style.width = '100px';
+                smoke.style.height = '50px';
+                smoke.style.background = 'rgba(200, 200, 200, 0.5)';
+                smoke.style.borderRadius = '50%';
+                smoke.style.filter = 'blur(10px)';
+                smoke.style.bottom = '150px';
+                smoke.style.left = '50%';
+                smoke.style.transform = 'translateX(-50%)';
+                smoke.style.opacity = '0';
+                smoke.style.animation = 'smoke 2s forwards';
+                
+                document.querySelector('.cake-container').appendChild(smoke);
+                
+                setTimeout(() => {
+                    smoke.remove();
+                }, 2000);
+            }, 300);
+            
+            // 触发额外烟花
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    createFireworkAt(
+                        Math.random() * canvas.width,
+                        Math.random() * canvas.height * 0.6
+                    );
+                }, i * 200);
+            }
+            
+            // 添加心形庆祝
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = '❤';
+                    heart.style.position = 'fixed';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.fontSize = (Math.random() * 2 + 1) + 'rem';
+                    heart.style.color = '#ff1493';
+                    heart.style.opacity = '0.9';
+                    heart.style.zIndex = '10';
+                    document.body.appendChild(heart);
+                    
+                    // 设置动画
+                    heart.style.animation = 'float 3s ease-out forwards';
+                    
+                    // 动画结束后移除
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 70);
+            }
+            
+            // 显示许愿卡片
+            setTimeout(() => {
+                wishCard.classList.add('show');
+            }, 1500);
+            
+            candlesBlown = true;
+            blowButton.innerHTML = '🎉 愿望已送达！ 💝';
+            blowButton.disabled = true;
+        });
+        
+        // 通知函数
+        function showToast(message, duration=3000) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+        
+        // 保存愿望到Supabase
+        async function saveWishToSupabase(wish) {
+            showToast('愿望保存中...');
+            try {
+                const { error } = await supabase
+                    .from('birthday_data')
+                    .upsert([
+                        { 
+                            id: 'birthday_wish', 
+                            wish: wish,
+                            updated_at: new Date()
+                        }
+                    ]);
+                
+                if (error) throw error;
+                
+                showToast('愿望保存成功');
+                wishContent.textContent = wish;
+                saveWishBtn.innerHTML = '<i class="fas fa-check"></i> 愿望已保存';
+                
+                setTimeout(() => {
+                    wishCard.classList.remove('show');
+                }, 2000);
+            } catch (error) {
+                showToast('保存失败，请重试');
+                console.error('保存愿望失败:', error);
+            }
+        }
+        
+        // 从Supabase加载愿望
+        async function loadWishFromSupabase() {
+            try {
+                const { data, error } = await supabase
+                    .from('birthday_data')
+                    .select('wish')
+                    .eq('id', 'birthday_wish')
+                    .single();
+                
+                if (error) throw error;
+                
+                if (data && data.wish) {
+                    wishContent.textContent = data.wish;
+                    wishText.value = data.wish;
+                }
+            } catch (error) {
+                console.error('加载愿望失败:', error);
+            }
+        }
+        
+        // 保存愿望按钮点击事件
+        saveWishBtn.addEventListener('click', () => {
+            const wish = wishText.value.trim();
+            if (wish !== '') {
+                saveWishToSupabase(wish);
+            }
+        });
+        
+        // 愿望展示区切换
+        const toggleWishesBtn = document.getElementById('toggle-wishes');
+        const wishesDisplay = document.getElementById('wishes-display');
+        
+        toggleWishesBtn.addEventListener('click', () => {
+            wishesDisplay.classList.toggle('show');
+        });
+        
+        // 视频祝福功能
+        const videoUploadBtn = document.getElementById('video-upload-btn');
+        const videoUploadInput = document.getElementById('video-upload');
+        const videoPlayer = document.getElementById('video-player');
+        const videoPlaceholder = document.getElementById('video-placeholder');
+        const videoListContainer = document.getElementById('video-list'); // 视频列表容器
+        
+        // 上传视频
+        videoUploadBtn.addEventListener('click', () => {
+            videoUploadInput.click();
+        });
+        
+        // 修改视频上传部分
+        videoUploadInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (!file.type.startsWith('video/')) {
+                showToast('请上传视频文件！');
+                return;
+            }
+
+            // 更安全的文件大小检查
+            if (file.size > 1024 * 1024 * 500) { // 500MB
+                showToast('视频大小不能超过500MB');
+                return;
+            }
+
+            showToast('视频上传中...');
+
+            try {
+                // 生成UUID作为主键ID
+                const videoId = crypto.randomUUID();
+                
+                // 创建更安全的文件名
+                const timestamp = Date.now();
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${timestamp}-${videoId.substring(0, 8)}.${fileExt}`;
+                const filePath = `${fileName}`;
+
+                // 上传到存储桶
+                const { error: uploadError } = await supabase.storage
+                    .from('birthday-videos')
+                    .upload(filePath, file);
+                
+                if (uploadError) throw uploadError;
+                
+                // 获取公开URL
+                const { data: { publicUrl } } = await supabase.storage
+                    .from('birthday-videos')
+                    .getPublicUrl(filePath);
+
+                // 保存到数据库
+                const { error: dbError } = await supabase
+                    .from('birthday_videos')
+                    .insert([{ 
+                        id: videoId,    
+                        url: publicUrl,
+                        created_at: new Date().toISOString() 
+                    }]);
+                
+                if (dbError) throw dbError;
+                
+                // 设置视频播放器
+                videoPlayer.src = publicUrl;
+                videoPlayer.style.display = 'block';
+                videoPlaceholder.style.display = 'none'; // 隐藏上传区域
+
+                showToast('🎉 视频上传成功！');
+                
+                // 刷新视频列表
+                await loadVideosFromSupabase();
+            } catch (error) {
+                showToast(`上传失败: ${error.message}`);
+                console.error('视频上传失败:', error);
+            }
+        });
+                
+        // 视频控制
+        // 修复：使用类选择器而不是ID选择器
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.play-btn')) {
+                videoPlayer.play();
+            }
+            if (e.target.closest('.pause-btn')) {
+                videoPlayer.pause();
+            }
+            if (e.target.closest('.volume-up')) {
+                if (videoPlayer.volume < 1) {
+                    videoPlayer.volume += 0.1;
+                }
+            }
+            if (e.target.closest('.volume-down')) {
+                if (videoPlayer.volume > 0) {
+                    videoPlayer.volume -= 0.1;
+                }
+            }
+            if (e.target.closest('.back-btn')) {
+                videoPlayer.style.display = 'none';
+                videoPlaceholder.style.display = 'flex';
+                videoPlayer.pause();
+            }
+        });
+
+        // 视频列表容器
+        async function loadVideosFromSupabase() {
+            try {
+                const { data, error } = await supabase
+                    .from('birthday_videos')
+                    .select('*')
+                    .order('created_at', { ascending: false }); // 按上传时间倒序排列
+                
+                if (error) throw error;
+                
+                videoListContainer.innerHTML = '';
+                
+                if (data.length === 0) {
+                    videoListContainer.innerHTML = '<p style="text-align:center;color:#c71585;">还没有视频祝福</p>';
+                    return;
+                }
+                
+                data.forEach(video => {
+                    createVideoItem(video.id, video.url, video.created_at);
+                });
+            } catch (error) {
+                console.error('加载视频列表失败:', error);
+                showToast('加载视频列表失败');
+            }
+        }
+
+        // 创建视频列表项
+        function createVideoItem(id, url, createdAt) {
+            const videoItem = document.createElement('div');
+            videoItem.className = 'video-item';
+            videoItem.dataset.id = id;
+            videoItem.dataset.url = url;
+            
+            const thumbnail = document.createElement('div');
+            thumbnail.className = 'video-thumbnail';
+            thumbnail.innerHTML = '<i class="fas fa-play-circle"></i>';
+            
+            const title = document.createElement('div');
+            title.className = 'video-title';
+            
+            // 格式化日期
+            const date = new Date(createdAt);
+            const formattedDate = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+            title.textContent = `祝福视频 ${formattedDate}`;
+            
+            const controls = document.createElement('div');
+            controls.className = 'video-controls';
+            
+            const deleteBtn = document.createElement('div');
+            deleteBtn.className = 'video-control-btn';
+            deleteBtn.title = '删除视频';
+            deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation();
+                deleteVideoFromSupabase(id);
+            };
+            
+            controls.appendChild(deleteBtn);
+            
+            videoItem.appendChild(thumbnail);
+            videoItem.appendChild(title);
+            videoItem.appendChild(controls);
+            
+            // 点击播放视频
+            videoItem.addEventListener('click', () => {
+                videoPlayer.src = url;
+                videoPlayer.style.display = 'block';
+                videoPlaceholder.style.display = 'none';
+                videoPlayer.play();
+            });
+            
+            videoListContainer.appendChild(videoItem);
+        }
+
+        // 删除视频
+        async function deleteVideoFromSupabase(videoId) {
+            if (!confirm('确定要删除这个视频吗？')) return;
+            
+            showToast('删除视频中...');
+            try {
+                // 先获取视频URL
+                const { data: video, error: fetchError } = await supabase
+                    .from('birthday_videos')
+                    .select('url')
+                    .eq('id', videoId)
+                    .single();
+                
+                if (fetchError) throw fetchError;
+                
+                // 解析文件名
+                const urlParts = video.url.split('/');
+                const fileName = urlParts[urlParts.length - 1];
+                
+                // 从存储桶删除文件
+                const { error: storageError } = await supabase.storage
+                    .from('birthday-videos')
+                    .remove([fileName]);
+                
+                if (storageError) throw storageError;
+                
+                // 从数据库删除记录
+                const { error: dbError } = await supabase
+                    .from('birthday_videos')
+                    .delete()
+                    .eq('id', videoId);
+                
+                if (dbError) throw dbError;
+                
+                // 从DOM中移除
+                const videoItem = document.querySelector(`.video-item[data-id="${videoId}"]`);
+                if (videoItem) {
+                    videoItem.remove();
+                }
+                
+                showToast('视频删除成功');
+            } catch (error) {
+                showToast('删除失败，请重试');
+                console.error('删除视频失败:', error);
+            }
+        }
+
+
+        // 在视频上传成功后刷新视频列表
+        async function refreshVideoList() {
+            await loadVideosFromSupabase();
+        }
+
+        
+        // 添加祝福功能
+        const addWishBtn = document.getElementById('add-wish-btn');
+        const newWishInput = document.getElementById('new-wish');
+        const wishesContainer = document.getElementById('wishes-container');
+        
+        // 从Supabase加载祝福
+        async function loadWishesFromSupabase() {
+            try {
+                const { data, error } = await supabase
+                    .from('birthday_wishes')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                wishesContainer.innerHTML = '';
+                data.forEach(wish => {
+                    const wishDiv = document.createElement('div');
+                    wishDiv.className = 'wish';
+                    wishDiv.textContent = '🎉 ' + wish.text;
+                    wishesContainer.appendChild(wishDiv);
+                });
+            } catch (error) {
+                console.error('加载祝福失败:', error);
+            }
+        }
+        
+        // 添加祝福到Supabase
+        async function addWishToSupabase(text) {
+            showToast('发送祝福中...');
+            try {
+                const { data, error } = await supabase
+                    .from('birthday_wishes')
+                    .insert([
+                        { text: text }
+                    ]);
+                
+                if (error) throw error;
+                
+                // 手动将新祝福添加到列表前面
+                const wishDiv = document.createElement('div');
+                wishDiv.className = 'wish';
+                wishDiv.textContent = '🎉 ' + text;
+                wishesContainer.prepend(wishDiv);
+                
+                newWishInput.value = '';
+                showToast('祝福发送成功');
+            } catch (error) {
+                showToast('添加失败，请重试');
+                console.error('添加祝福失败:', error);
+            }
+        }
+        
+        addWishBtn.addEventListener('click', () => {
+            const wishText = newWishInput.value.trim();
+            if (wishText !== '') {
+                addWishToSupabase(wishText);
+            }
+        });
+        
+        // 按回车添加祝福
+        newWishInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addWishBtn.click();
+            }
+        });
+        
+        // 照片上传功能
+        const photoUploadInput = document.getElementById('photo-upload');
+        const uploadStatus = document.getElementById('upload-status');
+        const photosGrid = document.getElementById('photos-grid');
+        
+        // 从Supabase加载照片
+        async function loadPhotosFromSupabase() {
+            try {
+                const { data, error } = await supabase
+                    .from('birthday_photos')
+                    .select('*');
+                
+                if (error) throw error;
+                
+                photosGrid.innerHTML = '';
+                
+                if (data.length === 0) {
+                    uploadStatus.textContent = '尚未添加照片';
+                } else {
+                    data.forEach(photo => {
+                        createPhotoElement(photo.id, photo.url);
+                    });
+                    uploadStatus.textContent = `已加载 ${data.length} 张照片`;
+                }
+            } catch (error) {
+                console.error('加载照片失败:', error);
+            }
+        }
+        
+        // 上传照片到Supabase
+        async function uploadPhotoToSupabase(file) {
+            showToast('照片上传中...');
+            try {
+                // 生成唯一文件名
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Math.random()}.${fileExt}`.replace('0.', '');
+                const filePath = `${fileName}`;
+                
+                // 上传到存储桶
+                const { error: uploadError } = await supabase.storage
+                    .from('birthday-photos')
+                    .upload(filePath, file);
+                
+                if (uploadError) throw uploadError;
+                
+                // 获取公开URL
+                const { data: { publicUrl } } = await supabase.storage
+                    .from('birthday-photos')
+                    .getPublicUrl(filePath);
+                
+                // 获取公开URL后 ↓↓↓ 添加以下内容 ↓↓↓
+                // 生成UUID作为主键ID
+                const photoId = crypto.randomUUID();  // 使用浏览器内置UUID生成器
+                
+                // 保存到数据库（包含新生成的ID）
+                const { error: dbError } = await supabase
+                    .from('birthday_photos')
+                    .insert([{ 
+                        id: photoId,   // 关键添加！提供主键
+                        url: publicUrl,
+                        created_at: new Date()  // 确保字段名与表结构一致
+                    }]);
+
+                if (dbError) throw dbError;
+                
+                // 创建新照片元素
+                createPhotoElement(Date.now(), publicUrl);
+                showToast('照片上传成功');
+            } catch (error) {
+                throw new Error('上传失败: ' + error.message);
+            }
+        }
+
+        // 创建照片元素
+        // 创建照片元素（安全处理ID格式）
+        function createPhotoElement(id, url) {
+            const photoContainer = document.createElement('div');
+            photoContainer.className = 'memory-photo-container';
+            photoContainer.id = `photo-container-${id}`;
+            
+            const photoElement = document.createElement('div');
+            photoElement.className = 'memory-photo';
+            
+            // 使用img标签代替背景图
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = `回忆 ${id}`;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            
+            photoElement.appendChild(img);
+            
+            const caption = document.createElement('div');
+            caption.className = 'photo-caption';
+            
+            // 安全处理ID显示 - 关键修复
+            let displayId = id;
+            try {
+                // 确保ID是字符串
+                const idStr = String(id);
+                
+                // 如果ID长度足够，取最后6位字符
+                if (idStr.length >= 6) {
+                    displayId = idStr.slice(-6);
+                } else {
+                    // 如果ID太短，直接使用
+                    displayId = idStr;
+                }
+            } catch (e) {
+                console.error('ID处理错误:', e);
+                // 出错时使用默认显示
+                displayId = '回忆';
+            }
+            caption.textContent = `回忆 ${displayId}`;
+            
+            const controls = document.createElement('div');
+            controls.className = 'photo-controls';
+            
+            const deleteBtn = document.createElement('div');
+            deleteBtn.className = 'photo-btn';
+            deleteBtn.title = '删除照片';
+            deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+            deleteBtn.onclick = () => {
+                deletePhotoFromSupabase(id);
+            };
+            
+            controls.appendChild(deleteBtn);
+            
+            photoContainer.appendChild(photoElement);
+            photoContainer.appendChild(caption);
+            photoContainer.appendChild(controls);
+            
+            photosGrid.appendChild(photoContainer);
+        }
+        
+        // 从Supabase删除照片
+        async function deletePhotoFromSupabase(photoId) {
+            showToast('删除照片中...');
+            try {
+                // 先获取文件路径
+                const { data: photo, error: fetchError } = await supabase
+                    .from('birthday_photos')
+                    .select('url')
+                    .eq('id', photoId)  // 使用提供的ID精确查找
+                    .single();
+
+                // 从数据库删除记录
+                const { error } = await supabase
+                    .from('birthday_photos')
+                    .delete()
+                    .eq('id', photoId);
+                
+                if (error) throw error;
+                
+                // 从DOM中移除
+                const photoElement = document.getElementById(`photo-container-${photoId}`);
+                if (photoElement) {
+                    photoElement.remove();
+                }
+                
+                showToast('照片删除成功');
+            } catch (error) {
+                showToast('删除失败，请重试');
+                console.error('删除失败:', error);
+            }
+        }
+        
+        // 照片上传处理
+        photoUploadInput.addEventListener('change', async (e) => {
+            const files = e.target.files;
+            if (files.length === 0) return;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                if (!file.type.match('image.*')) {
+                    uploadStatus.textContent = '请上传图片文件！';
+                    uploadStatus.style.color = '#e75480';
+                    continue;
+                }
+                
+                // 添加文件大小限制（可选）
+                if (file.size > 5 * 1024 * 1024) { // 5MB
+                    showToast('文件太大，请选择小于5MB的图片');
+                    continue;
+                }
+                
+                try {
+                    await uploadPhotoToSupabase(file);
+                } catch (error) {
+                    showToast('上传失败: ' + error.message);
+                    console.error('上传错误:', error);
+                }
+            }
+        });
+        
+        
+        // 实时监听数据变化
+        function setupRealtimeUpdates() {
+            // 监听愿望变化
+            supabase
+                .from('birthday_data')
+                .on('*', payload => {
+                    if (payload.new.id === 'birthday_wish') {
+                        wishContent.textContent = payload.new.wish;
+                        wishText.value = payload.new.wish;
+                    }
+                })
+                .subscribe();
+            
+            // 监听祝福变化
+            supabase
+                .from('birthday_wishes')
+                .on('INSERT', payload => {
+                    const wishDiv = document.createElement('div');
+                    wishDiv.className = 'wish';
+                    wishDiv.textContent = '🎉 ' + payload.new.text;
+                    wishesContainer.prepend(wishDiv);
+                })
+                .subscribe();
+            
+            // 监听照片变化
+            supabase
+                .from('birthday_photos')
+                .on('INSERT', payload => {
+                    // 确保使用正确的ID字段
+                    createPhotoElement(payload.new.id, payload.new.url);
+                })
+                .on('DELETE', payload => {
+                    // 使用ID精准定位要删除的元素
+                    const photoElement = document.getElementById(`photo-container-${payload.old.id}`);
+                    photoElement?.remove();
+                })
+                .subscribe();
+        }
+        
+        // 初始化页面
+        window.addEventListener('DOMContentLoaded', async () => {
+            // 创建心形雨
+            createHeartRain();
+            
+            // 初始化烟花
+            animateFireworks();
+            
+            // 加载照片
+            await loadPhotosFromSupabase();
+            
+            // 加载祝福
+            await loadWishesFromSupabase();
+            
+            // 加载愿望
+            await loadWishFromSupabase();
+
+            // 加载视频列表
+            await loadVideosFromSupabase();
+            
+            // 设置实时监听
+            setupRealtimeUpdates();
+            
+            // 设置朋友名字
+            document.getElementById('friend-name').textContent = '小美';
+            
+            // 设置生日日期
+            document.querySelector('.birthday-date').textContent = '2025年7月13日';
+            
+            // 显示愿望展示区
+            setTimeout(() => {
+                wishesDisplay.classList.add('show');
+            }, 2000);
+            
+            // 监听窗口大小变化
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        });
+    </script>
+</body>
+</html>
